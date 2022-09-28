@@ -135,11 +135,11 @@ console.log(typeof name.toString()); // string  // 'sun' 基本的字符类型
 ##### null表示"没有对象"，即该处不应该有值。典型用法是:
 
 （1） 作为函数的参数，表示该函数的参数不是对象。
- （2） 作为对象原型链的终点。
+（2） 作为对象原型链的终点。
 
 ##### undefined表示"缺少值"，就是此处应该有一个值，但是还没有定义。典型用法是：
 
-（1）变量被声明了，但没有赋值时，就等于undefined。
+ （1）变量被声明了，但没有赋值时，就等于undefined。
  （2) 调用函数时，应该提供的参数没有提供，该参数等于undefined。
  （3）对象没有赋值的属性，该属性的值为undefined。
  （4）函数没有返回值时，默认返回undefined。
@@ -185,13 +185,29 @@ toString是Object原型对象上的一个方法，该方法默认返回其调用
 #### 1.instanceof的底层实现原理，手动实现一个instanceof
 
 ```
-function new_instance_of(leftVaule, rightVaule) {     let rightProto = rightVaule.prototype; // 取右表达式的 prototype 值    leftVaule = leftVaule.__proto__; // 取左表达式的__proto__值    while (true) {    	if (leftVaule === null) {            return false;	        }        if (leftVaule === rightProto) {            return true;	        }         leftVaule = leftVaule.__proto__     }}
+function new_instance_of(leftVaule, rightVaule) {     
+  let rightProto = rightVaule.prototype; // 取右表达式的 prototype 值    
+  leftVaule = leftVaule.__proto__; // 取左表达式的__proto__值    
+  while (true) {    	
+    if (leftVaule === null) {           
+      return false;	        
+    }        
+    if (leftVaule === rightProto) {            
+      return true;	        
+    }         
+    leftVaule = leftVaule.__proto__     
+  }
+  }
 ```
 
 #### 2.实现继承的几种方式以及他们的优缺点
 
 ```
-// 原型继承。第一种是以`原型链的方式来实现继承`，但是这种实现方式存在的缺点是，在包含有引用类型的数据时，会被所有的实例对象所共享，容易造成修改的混乱。还有就是在创建子类型的时候不能向超类型传递参数。function SuperType(){    this.property = true;}SuperType.prototype.getSuperValue = function(){    return this.property;}function SubType(){    this.subProty =false;}SubType.prototype = new SuperType();var instance = new SubType();console.log(instance.getSuperValue())// 借用构造函数。第二种方式是使用`借用构造函数`的方式，这种方式是通过在子类型的函数中调用超类型的构造函数来实现的，这一种方法解决了不能向超类型传递参数的缺点，但是它存在的一个问题就是无法实现函数方法的复用，并且超类型原型定义的方法子类型也没有办法访问到。function SuperType(name) {    this.name = name;}function SubType(){    SuperType.call(this, 'demo');    this.age = 18;}var instance = new SubType();console.log(instance.name);console.log(instance.age);// 组合继承。第三种方式是`组合继承`，组合继承是将原型链和借用构造函数组合起来使用的一种方式。通过借用构造函数的方式来实现类型的属性的继承，通过将子类型的原型设置为超类型的实例来实现方法的继承。这种方式解决了上面的两种模式单独使用时的问题，但是由于我们是以超类型的实例来作为子类型的原型，所以调用了两次超类的构造函数，造成了子类型的原型中多了很多不必要的属性。function SuperType(name){    this.name = name;    this.colors = ['red'];}SuperType.prototype.sayName = function(){    console.log(this.name);}function SubType(name,age) {    SuperType.call(this,name);    this.age = age;}SubType.prototype = new SuperType();SubType.prototype.sayAge = function(){    console.log(this.age);}var instance = new SubType('demo',18);instance.sayAge();instance.sayName();// 原型式继承。第四种方式是`原型式继承`，原型式继承的主要思路就是基于已有的对象来创建新的对象，实现的原理是，向函数中传入一个对象，然后返回一个以这个对象为原型的对象。这种继承的思路主要不是为了实现创造一种新的类型，只是对某个对象实现一种简单继承，ES5 中定义的 Object.create() 方法就是原型式继承的实现。缺点与原型链方式相同。function object(o) {    function F(){};    F.prototype = o;    return new F();}var person = {    name: 'tom'}var anotherPerson = object(person)console.log(anotherPerson.name)// 寄生式继承。第五种方式是`寄生式继承`，寄生式继承的思路是创建一个用于封装继承过程的函数，通过传入一个对象，然后复制一个对象的副本，然后对象进行扩展，最后返回这个对象。这个扩展的过程就可以理解是一种继承。这种继承的优点就是对一个简单对象实现继承，如果这个对象不是我们的自定义类型时。缺点是没有办法实现函数的复用。function createAnother(original){    var clone =Object.create(original);    clone.sayHi = function () {        console.log('hi');    }    return clone;}var person = {    name: 'tom'}var anotherPerson = createAnother(person);console.log(anotherPerson.name)anotherPerson.sayHi();// 寄生组合式继承。第六种方式是`寄生式组合继承`，组合继承的缺点就是使用超类型的实例做为子类型的原型，导致添加了不必要的原型属性。寄生式组合继承的方式是使用超类型的原型的副本来作为子类型的原型，这样就避免了创建不必要的属性。function SuperType(name) {    this.name = name;}SuperType.prototype.sayName = function(){    console.log(this.name);}function SubType(name,age){    SuperType.call(this,name);    this.age = age;}function inheritPrototype(subType,superType){    var prototype = Object.create(superType.prototype);    prototype.constructor =subType;    subType.prototype = prototype;}inheritPrototype(SubType,SuperType);var person = new SubType('zhangsan',18);person.sayName()
+// 原型继承。第一种是以`原型链的方式来实现继承`，但是这种实现方式存在的缺点是，在包含有引用类型的数据时，会被所有的实例对象所共享，容易造成修改的混乱。还有就是在创建子类型的时候不能向超类型传递参数。
+```function SuperType(){    this.property = true;}SuperType.prototype.getSuperValue = function(){    return this.property;}function SubType(){    this.subProty =false;}SubType.prototype = new SuperType();var instance = new SubType();console.log(instance.getSuperValue())```
+// 借用构造函数。第二种方式是使用`借用构造函数`的方式，这种方式是通过在子类型的函数中调用超类型的构造函数来实现的，这一种方法解决了不能向超类型传递参数的缺点，但是它存在的一个问题就是无法实现函数方法的复用，并且超类型原型定义的方法子类型也没有办法访问到。function SuperType(name) {    this.name = name;}function SubType(){    SuperType.call(this, 'demo');    this.age = 18;}var instance = new SubType();console.log(instance.name);console.log(instance.age);
+// 组合继承。第三种方式是`组合继承`，组合继承是将原型链和借用构造函数组合起来使用的一种方式。通过借用构造函数的方式来实现类型的属性的继承，通过将子类型的原型设置为超类型的实例来实现方法的继承。这种方式解决了上面的两种模式单独使用时的问题，但是由于我们是以超类型的实例来作为子类型的原型，所以调用了两次超类的构造函数，造成了子类型的原型中多了很多不必要的属性。function SuperType(name){    this.name = name;    this.colors = ['red'];}SuperType.prototype.sayName = function(){    console.log(this.name);}function SubType(name,age) {    SuperType.call(this,name);    this.age = age;}SubType.prototype = new SuperType();SubType.prototype.sayAge = function(){    console.log(this.age);}var instance = new SubType('demo',18);instance.sayAge();instance.sayName();
+// 原型式继承。第四种方式是`原型式继承`，原型式继承的主要思路就是基于已有的对象来创建新的对象，实现的原理是，向函数中传入一个对象，然后返回一个以这个对象为原型的对象。这种继承的思路主要不是为了实现创造一种新的类型，只是对某个对象实现一种简单继承，ES5 中定义的 Object.create() 方法就是原型式继承的实现。缺点与原型链方式相同。function object(o) {    function F(){};    F.prototype = o;    return new F();}var person = {    name: 'tom'}var anotherPerson = object(person)console.log(anotherPerson.name)// 寄生式继承。第五种方式是`寄生式继承`，寄生式继承的思路是创建一个用于封装继承过程的函数，通过传入一个对象，然后复制一个对象的副本，然后对象进行扩展，最后返回这个对象。这个扩展的过程就可以理解是一种继承。这种继承的优点就是对一个简单对象实现继承，如果这个对象不是我们的自定义类型时。缺点是没有办法实现函数的复用。function createAnother(original){    var clone =Object.create(original);    clone.sayHi = function () {        console.log('hi');    }    return clone;}var person = {    name: 'tom'}var anotherPerson = createAnother(person);console.log(anotherPerson.name)anotherPerson.sayHi();// 寄生组合式继承。第六种方式是`寄生式组合继承`，组合继承的缺点就是使用超类型的实例做为子类型的原型，导致添加了不必要的原型属性。寄生式组合继承的方式是使用超类型的原型的副本来作为子类型的原型，这样就避免了创建不必要的属性。function SuperType(name) {    this.name = name;}SuperType.prototype.sayName = function(){    console.log(this.name);}function SubType(name,age){    SuperType.call(this,name);    this.age = age;}function inheritPrototype(subType,superType){    var prototype = Object.create(superType.prototype);    prototype.constructor =subType;    subType.prototype = prototype;}inheritPrototype(SubType,SuperType);var person = new SubType('zhangsan',18);person.sayName()
 ```
 
 #### 3.可以描述new一个对象的详细过程，手动实现一个new操作符
@@ -270,7 +286,13 @@ this 既不指向函数自身，也不指函数的词法作用域，而是调用
 **一）普通函数的调用，this指向的是Window**
 
 ```
-var name = '卡卡';function cat(){    var name = '有鱼';    console.log(this.name);//卡卡    console.log(this);//Window {frames: Window, postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, …}}cat();
+var name = '卡卡';
+function cat(){    
+  var name = '有鱼';    
+  console.log(this.name);//卡卡    
+  console.log(this);//Window {frames: Window, postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, …}
+ }
+ cat();
 ```
 
 **（二）对象的方法，this指的是该对象**
@@ -278,13 +300,30 @@ var name = '卡卡';function cat(){    var name = '有鱼';    console.log(this.
 1、一层作用域链时，this指的该对象
 
 ```
-var name = '卡卡';var cat = {    name:'有鱼',    eat:function(){        console.log(this.name);//有鱼    }}cat.eat();
+var name = '卡卡';
+var cat = {    
+  name:'有鱼',    
+  eat:function(){        
+    console.log(this.name);//有鱼    
+  }
+}
+cat.eat();
 ```
 
 2、多层作用域链时，this指的是距离方法最近的一层对象
 
 ```
-var name = '卡卡';var cat = {    name:'有鱼',    eat1:{        name:'年年',        eat2:function(){            console.log(this.name);//年年        }    }}cat.eat1.eat2();
+var name = '卡卡';
+var cat = {    
+  name:'有鱼',    
+  eat1:{        
+    name:'年年',        
+    eat2:function(){           
+      console.log(this.name);//年年        
+    }    
+   }
+ }
+ cat.eat1.eat2();
 ```
 
 这里需要注意一个情况，如果cat.eat1.eat2这个结果赋值给一个变量eat3，则eat3()的值是多少呢？
@@ -298,25 +337,56 @@ var eat3 = cat.eat1.eat2;eat3(); // 卡卡
 **（三）构造函数的调用，this指的是实例化的新对象**
 
 ```
-var name = '卡卡';function Cat(){    this.name = '有鱼';    this.type = '英短蓝猫';}var cat1 = new Cat();console.log(cat1);// 实例化新对象 Cat {name: "有鱼", type: "英短蓝猫"}console.log(cat1.name);// 有鱼
+var name = '卡卡';
+function Cat(){    
+  this.name = '有鱼';    
+  this.type = '英短蓝猫';
+}
+var cat1 = new Cat();
+console.log(cat1);// 实例化新对象 
+Cat {name: "有鱼", type: "英短蓝猫"}
+console.log(cat1.name);// 有鱼
 ```
 
 **（四）apply和call调用时，this指向参数中的对象**
 
 ```
-var name = '有鱼';function eat(){    console.log(this.name);}var cat = {    name:'年年',}var dog = {    name:'高飞',}eat.call(cat);// 年年eat.call(dog);// 高飞
+var name = '有鱼';
+function eat(){    
+  console.log(this.name);
+}
+var cat = {    
+  name:'年年',
+}
+var dog = {    
+  name:'高飞',
+}
+eat.call(cat);// 年年
+eat.call(dog);// 高飞
 ```
 
 **（五）匿名函数调用，指向的是全局对象**
 
 ```
-var name = '卡卡';var cat = {    name:'有鱼',    eat:(function(){        console.log(this.name);//卡卡    })()}cat.eat;
+var name = '卡卡';
+var cat = {    
+  name:'有鱼',    
+  eat:(function(){        
+    console.log(this.name);//卡卡    
+    })()
+}
+cat.eat;
 ```
 
 **（六）定时器中调用，指向的是全局变量**
 
 ```
-var name = '卡卡';var cat = setInterval(function(){    var name = '有鱼';    console.log(this.name);// 卡卡    clearInterval(cat);},500);
+var name = '卡卡';
+var cat = setInterval(function(){    
+  var name = '有鱼';    
+  console.log(this.name);// 卡卡    
+  clearInterval(cat);
+},500);
 ```
 
 总结：
@@ -332,7 +402,13 @@ var name = '卡卡';var cat = setInterval(function(){    var name = '有鱼';   
 包就是能够读取其他函数内部变量的函数 它的最大用处有两个，一个是前面提到的可以读取函数内部的变量，另一个就是让这些变量的值始终保持在内存中。
 
 ```
-function f1() {    var n = 999;    nAdd = function () {        n += 1    }    function f2() {        alert(n);    }    return f2;}var result = f1();result(); // 999nAdd();result(); // 1000
+function f1() {    
+  var n = 999;    
+  nAdd = function () { n += 1 }    
+  function f2() { alert(n); }    
+  return f2;
+}
+var result = f1();result(); // 999nAdd();result(); // 1000
 ```
 
 在这段代码中，result实际上就是闭包f2函数。它一共运行了两次，第一次的值是999，第二次的值是1000。这证明了，函数f1中的局部变量n一直保存在内存中，并没有在f1调用后被自动清除。 为什么会这样呢？
@@ -367,7 +443,12 @@ function f1() {    var n = 999;    nAdd = function () {        n += 1    }    fu
 #### 3.使用Promise实现串行
 
 ```
-function execute(tasks){    return tasks.reduce((previousPromise, currentPromise)=>previousPromise.then(resultList=>{        return new Promise(resolve=>{            currentPromise().then(result=>{                resolve(resultList.concat(result))            }).catch(()=>{                resolve(resultList.concat(null))            })        })    },Promise.resolve([])))}const execute = (tasks = []) => {    const resultList = [];    for(task of tasks){        try{            resultList.push(await tasks())        }catch(err){            resultList.push(null);        }    }    return resultList;}
+function execute(tasks){    
+  return tasks.reduce((previousPromise, currentPromise)=>previousPromise.then(resultList=>{        
+    return new Promise(resolve=>{ 
+      currentPromise().then(result=>{
+        resolve(resultList.concat(result))
+        }).catch(()=>{                resolve(resultList.concat(null))            })        })    },Promise.resolve([])))}const execute = (tasks = []) => {    const resultList = [];    for(task of tasks){        try{            resultList.push(await tasks())        }catch(err){            resultList.push(null);        }    }    return resultList;}
 ```
 
 #### 4.Node与浏览器EventLoop的差异
@@ -383,7 +464,13 @@ ECMAScript和JavaScript的关系是，前者是后者的规格，后者是前者
 #### 2.setInterval需要注意的点，使用settimeout实现setInterval
 
 ```
-function  mySetInterval(fn,mil){    function interval(){        setTimeout(interval,mil);        fn();    }    setTimeout(interval,mil)}mySetInterval(function(){console.log(1)},1000)
+function  mySetInterval(fn,mil){    
+  function interval(){
+    setTimeout(interval,mil);        
+    fn();    
+  }
+ }
+setTimeout(interval,mil)}mySetInterval(function(){console.log(1)},1000)
 ```
 
 #### 3.什么是防抖和节流？有什么区别？如何实现？
@@ -392,14 +479,38 @@ function  mySetInterval(fn,mil){    function interval(){        setTimeout(inter
  防抖就是n时间内函数只会执行一次，如果n时间内多次触发则会重新计算时间
 
 ```
- function debounce(fn){          let timeout =null;          return function(){              clearTimeout(timeout);              timeout =setTimeout(function(){                  fn.apply(this,arguments)              },500)          }      }      function say(){          console.log('防抖')      }      var myInput = document.getElementById('hello');      myInput.addEventListener('input',debounce(say))
+ function debounce(fn){          
+  let timeout =null;          
+  return function(){ 
+    clearTimeout(timeout);              
+    timeout =setTimeout(function(){                  
+      fn.apply(this,arguments)              
+    },500)
+  }
+ }      
+ function say(){ console.log('防抖') }      
+ var myInput = document.getElementById('hello');      
+ myInput.addEventListener('input',debounce(say))
 ```
 
 **节流**
  n时间内只会执行一次
 
 ```
- function throttle(fn){          let canFlag = true;          return function(){              if(!canFlag) return;              canFlag = false;              setTimeout(()=>{                  fn.apply(this,arguments);                  canFlag = true              },1000)          }      }      function say(){          console.log('节流',new Date())      }      var myInput = document.getElementById('hello');      myInput.addEventListener('input',throttle(say))
+ function throttle(fn){          
+  let canFlag = true;          
+  return function(){              
+    if(!canFlag) return;              
+    canFlag = false;              
+    setTimeout(()=>{  
+      fn.apply(this,arguments);
+      canFlag = true 
+    },1000)          
+   }      
+  }      
+ function say(){ console.log('节流',new Date()) }      
+ var myInput = document.getElementById('hello');      
+ myInput.addEventListener('input',throttle(say))
 ```
 
 #### 4.介绍下 Set、Map、WeakSet 和 WeakMap 的区别？
