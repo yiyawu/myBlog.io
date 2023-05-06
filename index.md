@@ -1,20 +1,20 @@
-## JavaScript基础
+## JavaScript 基础
 
 ### 变量和类型
 
-#### 1.JavaScript规定了几种数据类型
+#### 1.JavaScript 规定了几种数据类型
 
-js目前共定义了8种数据类型，其中包括：Undefined,Null,Boolean，Number，String，Object， Symbol,BigInt
+js 目前共定义了 8 种数据类型，其中包括：Undefined,Null,Boolean，Number，String，Object， Symbol,BigInt
 
-#### 2.JavaScript对象的底层数据结构是什么
+#### 2.JavaScript 对象的底层数据结构是什么
 
-JavaScript基本类型数据都是直接按值存储在栈中的(Undefined、Null、不是new出来的布尔、数字和字符串)，每种类型的数据占用的内存空间的大小是确定的，并由系统自动分配和自动释放。这样带来的好处就是，内存可以及时得到回收，相对于堆来说 ，更加容易管理内存空间。
+JavaScript 基本类型数据都是直接按值存储在栈中的(Undefined、Null、不是 new 出来的布尔、数字和字符串)，每种类型的数据占用的内存空间的大小是确定的，并由系统自动分配和自动释放。这样带来的好处就是，内存可以及时得到回收，相对于堆来说 ，更加容易管理内存空间。
 
-JavaScript引用类型数据被存储于堆中 (如对象、数组、函数等，它们是通过拷贝和new出来的）。其实，说存储于堆中，也不太准确，因为，引用类型的数据的地址指针是存储于栈中的，当我们想要访问引用类型的值的时候，需要先从栈中获得对象的地址指针，然后，在通过地址指针找到堆中的所需要的数据。
+JavaScript 引用类型数据被存储于堆中 (如对象、数组、函数等，它们是通过拷贝和 new 出来的）。其实，说存储于堆中，也不太准确，因为，引用类型的数据的地址指针是存储于栈中的，当我们想要访问引用类型的值的时候，需要先从栈中获得对象的地址指针，然后，在通过地址指针找到堆中的所需要的数据。
 
-#### 3.Symbol类型在实际开发中的应用、可手动实现一个简单的Symbol
+#### 3.Symbol 类型在实际开发中的应用、可手动实现一个简单的 Symbol
 
-1.使用Symbol来替代常量
+1.使用 Symbol 来替代常量
 
 ```
 const TYPE_AUDIO = Symbol()
@@ -22,7 +22,7 @@ const TYPE_VIDEO = Symbol()
 const TYPE_IMAGE = Symbol()
 ```
 
-2.使用Symbol来作为对象属性名(key)
+2.使用 Symbol 来作为对象属性名(key)
 
 ```
 const PROP_NAME = Symbol()
@@ -33,7 +33,7 @@ let obj = {
 obj[PROP_AGE] = 18
 ```
 
-3.使用Symbol定义类的私有属性/方法
+3.使用 Symbol 定义类的私有属性/方法
 
 ```
 // a.js
@@ -59,9 +59,9 @@ login["PASSWORD"] // oh!no!
 
 ```
 
-由于Symbol常量PASSWORD被定义在a.js所在的模块中，外面的模块获取不到这个Symbol，也不可能再创建一个一模一样的Symbol出来（因为Symbol是唯一的），因此这个PASSWORD的Symbol只能被限制在a.js内部使用，所以使用它来定义的类属性是没有办法被模块外访问到的，达到了一个私有化的效果。
+由于 Symbol 常量 PASSWORD 被定义在 a.js 所在的模块中，外面的模块获取不到这个 Symbol，也不可能再创建一个一模一样的 Symbol 出来（因为 Symbol 是唯一的），因此这个 PASSWORD 的 Symbol 只能被限制在 a.js 内部使用，所以使用它来定义的类属性是没有办法被模块外访问到的，达到了一个私有化的效果。
 
-4.注册和获取全局Symbol window中创建的Symbol实例总是唯一的，而我们需要的是在所有这些window环境下保持一个共享的Symbol。这种情况下，我们就需要使用另一个API来创建或获取Symbol，那就是Symbol.for()，它可以注册或获取一个window间全局的Symbol实例：
+4.注册和获取全局 Symbol window 中创建的 Symbol 实例总是唯一的，而我们需要的是在所有这些 window 环境下保持一个共享的 Symbol。这种情况下，我们就需要使用另一个 API 来创建或获取 Symbol，那就是 Symbol.for()，它可以注册或获取一个 window 间全局的 Symbol 实例：
 
 ```
 let gs1 = Symbol.for('global_symbol_1')  //注册一个全局Symbol
@@ -70,10 +70,10 @@ gs1 === gs2  // true
 
 ```
 
-#### 4.JavaScript中的变量在内存中的具体存储形式
+#### 4.JavaScript 中的变量在内存中的具体存储形式
 
 基本类型是保存在栈内存中的简单数据段，它们的值都有固定的大小，保存在栈空间，通过按值访问
- 引用类型是保存在堆内存中的对象，值大小不固定，栈内存中存放的该对象的访问地址指向堆内存中的对象，JavaScript不允许直接访问堆内存中的位置，因此操作对象时，实际操作对象的引用
+引用类型是保存在堆内存中的对象，值大小不固定，栈内存中存放的该对象的访问地址指向堆内存中的对象，JavaScript 不允许直接访问堆内存中的位置，因此操作对象时，实际操作对象的引用
 
 ```
 let a1 = 0; // 栈内存
@@ -88,7 +88,7 @@ let c = [1, 2, 3]; // 变量c存在于栈中，[1, 2, 3]作为对象存在于堆
 
 #### 5.基本类型对应的内置对象，以及他们之间的装箱拆箱操作
 
-**内置对象：** Object是 JavaScript 中所有对象的父对象 数据封装类对象：Object、Array、Boolean、Number 和 String 其他对象：Function、Math、Date、RegExp、Error。 特殊的基本包装类型(String、Number、Boolean) arguments: 只存在于函数内部的一个类数组对象 **装箱：** 把基本数据类型转化为对应的引用数据类型的操作，装箱分为隐式装箱和显示装箱 **隐式装箱**
+**内置对象：** Object 是 JavaScript 中所有对象的父对象 数据封装类对象：Object、Array、Boolean、Number 和 String 其他对象：Function、Math、Date、RegExp、Error。 特殊的基本包装类型(String、Number、Boolean) arguments: 只存在于函数内部的一个类数组对象 **装箱：** 把基本数据类型转化为对应的引用数据类型的操作，装箱分为隐式装箱和显示装箱 **隐式装箱**
 
 ```
 let a = 'sun'
@@ -107,11 +107,11 @@ a = null
 
 **实现机制：**
 
-1.创建String类型的一个实例； 2.在实例上调用指定的方法； 3.销毁这个实例；
+1.创建 String 类型的一个实例； 2.在实例上调用指定的方法； 3.销毁这个实例；
 
-**显示装箱** 通过内置对象可以对Boolean、Object、String等可以对基本类型显示装箱 let a = new String('sun')
+**显示装箱** 通过内置对象可以对 Boolean、Object、String 等可以对基本类型显示装箱 let a = new String('sun')
 
-**拆箱：** 拆箱和装箱相反，就是把引用类型转化为基本类型的数据，通常通过引用类型的valueof()和toString（）方法实现
+**拆箱：** 拆箱和装箱相反，就是把引用类型转化为基本类型的数据，通常通过引用类型的 valueof()和 toString（）方法实现
 
 ```
 let name = new String('sun')
@@ -130,43 +130,45 @@ console.log(typeof name.toString()); // string  // 'sun' 基本的字符类型
 
 ![image.png](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/16/173566d8945f5ec2~tplv-t2oaga2asx-watermark.awebp)
 
-#### 7.null和undefined的区别
+#### 7.null 和 undefined 的区别
 
-##### null表示"没有对象"，即该处不应该有值。典型用法是:
+##### null 表示"没有对象"，即该处不应该有值。典型用法是:
 
 （1） 作为函数的参数，表示该函数的参数不是对象。
 （2） 作为对象原型链的终点。
 
-##### undefined表示"缺少值"，就是此处应该有一个值，但是还没有定义。典型用法是：
+##### undefined 表示"缺少值"，就是此处应该有一个值，但是还没有定义。典型用法是：
 
- （1）变量被声明了，但没有赋值时，就等于undefined。
- （2) 调用函数时，应该提供的参数没有提供，该参数等于undefined。
- （3）对象没有赋值的属性，该属性的值为undefined。
- （4）函数没有返回值时，默认返回undefined。
+（1）变量被声明了，但没有赋值时，就等于 undefined。
+（2) 调用函数时，应该提供的参数没有提供，该参数等于 undefined。
+（3）对象没有赋值的属性，该属性的值为 undefined。
+（4）函数没有返回值时，默认返回 undefined。
 
-#### 8.至少可以说出三种判断JavaScript数据类型的方式，以及他们的优缺点，如何准确的判断数组类型
+#### 8.至少可以说出三种判断 JavaScript 数据类型的方式，以及他们的优缺点，如何准确的判断数组类型
 
 ##### 1、typeof:（可以对基本类型做出准确的判断，但对于引用类型，用它就有点力不从心了）
 
-typeof 返回一个表示数据类型的字符串，返回结果包括：number、boolean、string、object、undefined、function等6种数据类型。
+typeof 返回一个表示数据类型的字符串，返回结果包括：number、boolean、string、object、undefined、function 等 6 种数据类型。
 
 ##### 2、instanceof
 
-instanceof是用来判断A是否为B的实例时，表达式为：A instanceof B,如果 A是B的实例，则返回true; 否则返回false 在这里特别注意的是 instanceof检测的是原型
+instanceof 是用来判断 A 是否为 B 的实例时，表达式为：A instanceof B,如果 A 是 B 的实例，则返回 true; 否则返回 false 在这里特别注意的是 instanceof 检测的是原型
 
 ##### 3 Object.prototype.toString
 
-toString是Object原型对象上的一个方法，该方法默认返回其调用者的具体类型，更严格的讲，是 toString运行时this指向的对象类型, 返回的类型格式为[object,xxx],xxx是具体的数据类型，其中包括：String,Number,Boolean,Undefined,Null,Function,Date,Array,RegExp,Error,HTMLDocument,… 基本上所有对象的类型都可以通过这个方法获取到。 
-##### 4 constructor 查看对象对应的构造函数 
-construvtor在对应对象的原型下面，是自动生成的，当我们写一个构造函数的时候，程序自动添加，构造函数名.prototype.constructor = 构造函数名 ![image.png](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/16/173566d894e55e92~tplv-t2oaga2asx-watermark.awebp)
+toString 是 Object 原型对象上的一个方法，该方法默认返回其调用者的具体类型，更严格的讲，是 toString 运行时 this 指向的对象类型, 返回的类型格式为[object,xxx],xxx 是具体的数据类型，其中包括：String,Number,Boolean,Undefined,Null,Function,Date,Array,RegExp,Error,HTMLDocument,… 基本上所有对象的类型都可以通过这个方法获取到。
+
+##### 4 constructor 查看对象对应的构造函数
+
+construvtor 在对应对象的原型下面，是自动生成的，当我们写一个构造函数的时候，程序自动添加，构造函数名.prototype.constructor = 构造函数名 ![image.png](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/16/173566d894e55e92~tplv-t2oaga2asx-watermark.awebp)
 
 #### 9.可能发生隐式类型转换的场景以及转换原则，应如何避免或巧妙应用
 
 ![image.png](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/16/173566d897f4aba3~tplv-t2oaga2asx-watermark.awebp)
 
-#### 10.出现小数精度丢失的原因，JavaScript可以存储的最大数字、最大安全数字，JavaScript处理大数字的方法、避免精度丢失的方法
+#### 10.出现小数精度丢失的原因，JavaScript 可以存储的最大数字、最大安全数字，JavaScript 处理大数字的方法、避免精度丢失的方法
 
-0.1+0.2不等于0.3，是因为计算机进行计算时先转化成二进制，二浮点数用二进制表示时是无穷位的，IEEE754标准中用64位表示（1位用来表示符号位，11用来表示指数，52位表示尾数）会截断后面的位数，再转化成十进制，就有了误差。
+0.1+0.2 不等于 0.3，是因为计算机进行计算时先转化成二进制，二浮点数用二进制表示时是无穷位的，IEEE754 标准中用 64 位表示（1 位用来表示符号位，11 用来表示指数，52 位表示尾数）会截断后面的位数，再转化成十进制，就有了误差。
 
 **最大数字：**
 
@@ -184,98 +186,106 @@ construvtor在对应对象的原型下面，是自动生成的，当我们写一
 
 **特点:** `JavaScript`对象是通过引用来传递的，我们创建的每个新对象实体中并没有一份属于自己的原型副本。当我们修改原型时，与之相关的对象也会继承这一改变。
 
-#### 1.instanceof的底层实现原理，手动实现一个instanceof
+#### 1.instanceof 的底层实现原理，手动实现一个 instanceof
 
 ```
-function new_instance_of(leftVaule, rightVaule) {     
-  let rightProto = rightVaule.prototype; // 取右表达式的 prototype 值    
-  leftVaule = leftVaule.__proto__; // 取左表达式的__proto__值    
-  while (true) {    	
-    if (leftVaule === null) {           
-      return false;	        
-    }        
-    if (leftVaule === rightProto) {            
-      return true;	        
-    }         
-    leftVaule = leftVaule.__proto__     
+function new_instance_of(leftVaule, rightVaule) {
+  let rightProto = rightVaule.prototype; // 取右表达式的 prototype 值
+  leftVaule = leftVaule.__proto__; // 取左表达式的__proto__值
+  while (true) {
+    if (leftVaule === null) {
+      return false;
+    }
+    if (leftVaule === rightProto) {
+      return true;
+    }
+    leftVaule = leftVaule.__proto__
   }
   }
 ```
 
 #### 2.实现继承的几种方式以及他们的优缺点
 
-
 **原型继承**
 第一种是以`原型链的方式来实现继承`，但是这种实现方式存在的缺点是，在包含有引用类型的数据时，会被所有的实例对象所共享，容易造成修改的混乱。还有就是在创建子类型的时候不能向超类型传递参数。
+
 ```
-function SuperType(){    
+function SuperType(){
   this.property = true;
 }
-SuperType.prototype.getSuperValue = function(){    
+SuperType.prototype.getSuperValue = function(){
   return this.property;
 }
-function SubType(){    
+function SubType(){
   this.subProty =false;
 }
 SubType.prototype = new SuperType();
 var instance = new SubType();
 console.log(instance.getSuperValue())
 ```
+
 **借用构造函数**
 第二种方式是使用`借用构造函数`的方式，这种方式是通过在子类型的函数中调用超类型的构造函数来实现的，这一种方法解决了不能向超类型传递参数的缺点，但是它存在的一个问题就是无法实现函数方法的复用，并且超类型原型定义的方法子类型也没有办法访问到。
+
 ```
-function SuperType(name) {    
+function SuperType(name) {
   this.name = name;
 }
-function SubType(){    
-  SuperType.call(this, 'demo');    
+function SubType(){
+  SuperType.call(this, 'demo');
   this.age = 18;
 }
 var instance = new SubType();
 console.log(instance.name);
 console.log(instance.age);
 ```
+
 **组合继承**第三种方式是`组合继承`，组合继承是将原型链和借用构造函数组合起来使用的一种方式。通过借用构造函数的方式来实现类型的属性的继承，通过将子类型的原型设置为超类型的实例来实现方法的继承。这种方式解决了上面的两种模式单独使用时的问题，但是由于我们是以超类型的实例来作为子类型的原型，所以调用了两次超类的构造函数，造成了子类型的原型中多了很多不必要的属性。
+
 ```
-function SuperType(name){    
-  this.name = name;    
+function SuperType(name){
+  this.name = name;
   this.colors = ['red'];
 }
-SuperType.prototype.sayName = function(){    
+SuperType.prototype.sayName = function(){
   console.log(this.name);
 }
-function SubType(name,age) {    
-  SuperType.call(this,name);    
+function SubType(name,age) {
+  SuperType.call(this,name);
   this.age = age;
 }
 SubType.prototype = new SuperType();
-SubType.prototype.sayAge = function(){    
+SubType.prototype.sayAge = function(){
   console.log(this.age);
 }
 var instance = new SubType('demo',18);
 instance.sayAge();
 instance.sayName();
 ```
+
 **原型式继承**
 第四种方式是`原型式继承`，原型式继承的主要思路就是基于已有的对象来创建新的对象，实现的原理是，向函数中传入一个对象，然后返回一个以这个对象为原型的对象。这种继承的思路主要不是为了实现创造一种新的类型，只是对某个对象实现一种简单继承，ES5 中定义的 Object.create() 方法就是原型式继承的实现。缺点与原型链方式相同。
+
 ```
-function object(o) {    
-  function F(){};    
-  F.prototype = o;    
+function object(o) {
+  function F(){};
+  F.prototype = o;
   return new F();
 }
-var person = {    
+var person = {
   name: 'tom'
 }
 var anotherPerson = object(person)
 console.log(anotherPerson.name)
 ```
+
 **寄生式继承**
 第五种方式是`寄生式继承`，寄生式继承的思路是创建一个用于封装继承过程的函数，通过传入一个对象，然后复制一个对象的副本，然后对象进行扩展，最后返回这个对象。这个扩展的过程就可以理解是一种继承。这种继承的优点就是对一个简单对象实现继承，如果这个对象不是我们的自定义类型时。缺点是没有办法实现函数的复用。
+
 ```
-function createAnother(original){    
-  var clone =Object.create(original);    
-  clone.sayHi = function () {        console.log('hi');    }    
+function createAnother(original){
+  var clone =Object.create(original);
+  clone.sayHi = function () {        console.log('hi');    }
   return clone;
 }
 var person = {    name: 'tom'}
@@ -283,22 +293,24 @@ var anotherPerson = createAnother(person);
 console.log(anotherPerson.name)
 anotherPerson.sayHi();
 ```
+
 **寄生组合式继承**
 第六种方式是`寄生式组合继承`，组合继承的缺点就是使用超类型的实例做为子类型的原型，导致添加了不必要的原型属性。寄生式组合继承的方式是使用超类型的原型的副本来作为子类型的原型，这样就避免了创建不必要的属性。
+
 ```
-function SuperType(name) {    
+function SuperType(name) {
   this.name = name;
 }
-SuperType.prototype.sayName = function(){    
+SuperType.prototype.sayName = function(){
   console.log(this.name);
 }
-function SubType(name,age){    
-  SuperType.call(this,name);    
+function SubType(name,age){
+  SuperType.call(this,name);
   this.age = age;
 }
-function inheritPrototype(subType,superType){    
-  var prototype = Object.create(superType.prototype);    
-  prototype.constructor =subType;    
+function inheritPrototype(subType,superType){
+  var prototype = Object.create(superType.prototype);
+  prototype.constructor =subType;
   subType.prototype = prototype;
 }
 inheritPrototype(SubType,SuperType);
@@ -306,34 +318,34 @@ var person = new SubType('zhangsan',18);
 person.sayName()
 ```
 
-#### 3.可以描述new一个对象的详细过程，手动实现一个new操作符
+#### 3.可以描述 new 一个对象的详细过程，手动实现一个 new 操作符
 
 ```
-function Person (name,age){    
-  this.name = name;    
-  this.age = age;    
-  this.say = function () {        
-    console.log("I am " + this.name)    
+function Person (name,age){
+  this.name = name;
+  this.age = age;
+  this.say = function () {
+    console.log("I am " + this.name)
   }
 }
-function realizeNew(){    
-  let obj = {};    
-  let Con = [].shift.call(arguments);    
-  obj.__proto__ = Con.prototype;    
-  let result = Con.apply(obj,arguments);    
+function realizeNew(){
+  let obj = {};
+  let Con = [].shift.call(arguments);
+  obj.__proto__ = Con.prototype;
+  let result = Con.apply(obj,arguments);
   return typeof result === 'object'? result : obj}var person1 =realizeNew(Person,'张三')
 }
 ```
 
-#### 4.理解es6 class构造以及继承的底层实现原理
+#### 4.理解 es6 class 构造以及继承的底层实现原理
 
 ### 作用域和闭包
 
-闭包是指有权访问另一个函数作用域中的变量的函数 ——《JavaScript高级程序设计》
+闭包是指有权访问另一个函数作用域中的变量的函数 ——《JavaScript 高级程序设计》
 
 当函数可以记住并访问所在的词法作用域时，就产生了闭包，
 
-即使函数是在当前词法作用域之外执行 ——《你不知道的JavaScript》
+即使函数是在当前词法作用域之外执行 ——《你不知道的 JavaScript》
 
 - 闭包用途：
   1. 能够访问函数定义时所在的词法作用域(阻止其被回收)
@@ -345,14 +357,14 @@ function realizeNew(){
 #### 1.理解词法作用域和动态作用域
 
 **词法作用域**，函数的作用域在函数定义的时候就决定了（取决于函数定义的位置）
- **动态作用域**，函数的作用域在函数调用的时候就决定了（取决于函数的调用） js采用的是词法作用域
+**动态作用域**，函数的作用域在函数调用的时候就决定了（取决于函数的调用） js 采用的是词法作用域
 
-#### 2.理解JavaScript的作用域和作用域链
+#### 2.理解 JavaScript 的作用域和作用域链
 
-作用域就是一个独立的地盘，让变量不会外泄、暴露出去。也就是说作用域最大的用处就是隔离变量，不同作用域下同名变量不会有冲突。 ES6 之前 JavaScript 没有块级作用域,只有全局作用域和函数作用域。ES6的到来，为我们提供了‘块级作用域’,可通过新增命令let和const来体现。
+作用域就是一个独立的地盘，让变量不会外泄、暴露出去。也就是说作用域最大的用处就是隔离变量，不同作用域下同名变量不会有冲突。 ES6 之前 JavaScript 没有块级作用域,只有全局作用域和函数作用域。ES6 的到来，为我们提供了‘块级作用域’,可通过新增命令 let 和 const 来体现。
 
 ```
-function outFun2() {    
+function outFun2() {
   var inVariable = "内层变量2";
 }
 outFun2();//要先执行这个函数，否则根本不知道里面是啥
@@ -361,117 +373,117 @@ console.log(inVariable); // Uncaught ReferenceError: inVariable is not defined
 
 **作用域链** 在 JavaScript 中使用变量时，JavaScript 引擎将尝试在当前作用域中查找变量的值。如果找不到变量，它将查找外部作用域并继续这样做，直到找到变量或到达全局作用域为止。
 
-如果仍然找不到变量，它将在全局作用域内隐式声明变量（如果不是在严格模式下）或返回错误。 ####3.理解JavaScript的执行上下文栈，可以应用堆栈信息快速定位问题 执行上下文是当前 JavaScript 代码被解析和执行时所在环境的抽象概念。
+如果仍然找不到变量，它将在全局作用域内隐式声明变量（如果不是在严格模式下）或返回错误。 ####3.理解 JavaScript 的执行上下文栈，可以应用堆栈信息快速定位问题 执行上下文是当前 JavaScript 代码被解析和执行时所在环境的抽象概念。
 
 **执行上下文的类型** 执行上下文总共有三种类型
- **全局执行上下文**：只有一个，浏览器中的全局对象就是 window 对象，this 指向这个全局对象。
- **函数执行上下文**：存在无数个，只有在函数被调用的时候才会被创建，每次调用函数都会创建一个新的执行上下文。
- **Eval 函数执行上下文**： 指的是运行在 eval 函数中的代码，很少用而且不建议使用。
+**全局执行上下文**：只有一个，浏览器中的全局对象就是 window 对象，this 指向这个全局对象。
+**函数执行上下文**：存在无数个，只有在函数被调用的时候才会被创建，每次调用函数都会创建一个新的执行上下文。
+**Eval 函数执行上下文**： 指的是运行在 eval 函数中的代码，很少用而且不建议使用。
 
-**执行栈** 执行栈，也叫调用栈，具有 LIFO（后进先出）结构，用于存储在代码执行期间创建的所有执行上下文。 首次运行JS代码时，会创建一个全局执行上下文并Push到当前的执行栈中。每当发生函数调用，引擎都会为该函数创建一个新的函数执行上下文并Push到当前执行栈的栈顶。 根据执行栈LIFO规则，当栈顶函数运行完成后，其对应的函数执行上下文将会从执行栈中Pop出，上下文控制权将移到当前执行栈的下一个执行上下文。
+**执行栈** 执行栈，也叫调用栈，具有 LIFO（后进先出）结构，用于存储在代码执行期间创建的所有执行上下文。 首次运行 JS 代码时，会创建一个全局执行上下文并 Push 到当前的执行栈中。每当发生函数调用，引擎都会为该函数创建一个新的函数执行上下文并 Push 到当前执行栈的栈顶。 根据执行栈 LIFO 规则，当栈顶函数运行完成后，其对应的函数执行上下文将会从执行栈中 Pop 出，上下文控制权将移到当前执行栈的下一个执行上下文。
 
 **执行上下文的创建** 执行上下文分两个阶段创建：
- 1）创建阶段；
- 2）执行阶段
- **创建阶段**
- 1、确定 this 的值，也被称为 This Binding。
- 2、LexicalEnvironment（词法环境） 组件被创建。
- 3、VariableEnvironment（变量环境） 组件被创建。
- **This Binding:**
- 在全局执行上下文中，this 的值指向全局对象，在浏览器中，this 的值指向 window 对象。 在函数执行上下文中，this 的值取决于函数的调用方式。如果它被一个对象引用调用，那么 this 的值被设置为该对象，否则 this 的值被设置为全局对象或 undefined（严格模式下）
- **词法环境**
- 在词法环境中，有两个组成部分：
+1）创建阶段；
+2）执行阶段
+**创建阶段**
+1、确定 this 的值，也被称为 This Binding。
+2、LexicalEnvironment（词法环境） 组件被创建。
+3、VariableEnvironment（变量环境） 组件被创建。
+**This Binding:**
+在全局执行上下文中，this 的值指向全局对象，在浏览器中，this 的值指向 window 对象。 在函数执行上下文中，this 的值取决于函数的调用方式。如果它被一个对象引用调用，那么 this 的值被设置为该对象，否则 this 的值被设置为全局对象或 undefined（严格模式下）
+**词法环境**
+在词法环境中，有两个组成部分：
 （1）环境记录（environment record）
- （2）对外部环境的引用 环境记录是存储变量和函数声明的实际位置。 对外部环境的引用意味着它可以访问其外部词法环境。
- **变量环境:**
- 它也是一个词法环境，其 EnvironmentRecord 包含了由  VariableStatements 在此执行上下文创建的绑定。 如上所述，变量环境也是一个词法环境，因此它具有上面定义的词法环境的所有属性。 在 ES6 中，LexicalEnvironment 组件和 VariableEnvironment 组件的区别在于前者用于存储函数声明和变量（ let 和 const ）绑定，而后者仅用于存储变量（ var ）绑定。 在创建阶段，代码会被扫描并解析变量和函数声明，其中函数声明存储在环境中，而变量会被设置为 undefined（在 var 的情况下）或保持未初始化（在 let 和 const 的情况下） 这就是为什么你可以在声明之前访问 var 定义的变量（尽管是 undefined ），但如果在声明之前访问 let 和 const 定义的变量就会提示引用错误的原因。
+（2）对外部环境的引用 环境记录是存储变量和函数声明的实际位置。 对外部环境的引用意味着它可以访问其外部词法环境。
+**变量环境:**
+它也是一个词法环境，其 EnvironmentRecord 包含了由 VariableStatements 在此执行上下文创建的绑定。 如上所述，变量环境也是一个词法环境，因此它具有上面定义的词法环境的所有属性。 在 ES6 中，LexicalEnvironment 组件和 VariableEnvironment 组件的区别在于前者用于存储函数声明和变量（ let 和 const ）绑定，而后者仅用于存储变量（ var ）绑定。 在创建阶段，代码会被扫描并解析变量和函数声明，其中函数声明存储在环境中，而变量会被设置为 undefined（在 var 的情况下）或保持未初始化（在 let 和 const 的情况下） 这就是为什么你可以在声明之前访问 var 定义的变量（尽管是 undefined ），但如果在声明之前访问 let 和 const 定义的变量就会提示引用错误的原因。
 
 这就是我们所谓的变量提升。
 
-#### 4.this的原理以及几种不同使用场景的取值
+#### 4.this 的原理以及几种不同使用场景的取值
 
-##### 一、this原理
+##### 一、this 原理
 
 this 既不指向函数自身，也不指函数的词法作用域，而是调用函数时的对象！
 
 ##### 二、使用场景
 
-**一）普通函数的调用，this指向的是Window**
+**一）普通函数的调用，this 指向的是 Window**
 
 ```
 var name = '卡卡';
-function cat(){    
-  var name = '有鱼';    
-  console.log(this.name);//卡卡    
+function cat(){
+  var name = '有鱼';
+  console.log(this.name);//卡卡
   console.log(this);//Window {frames: Window, postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, …}
  }
  cat();
 ```
 
-**（二）对象的方法，this指的是该对象**
+**（二）对象的方法，this 指的是该对象**
 
-1、一层作用域链时，this指的该对象
+1、一层作用域链时，this 指的该对象
 
 ```
 var name = '卡卡';
-var cat = {    
-  name:'有鱼',    
-  eat:function(){        
-    console.log(this.name);//有鱼    
+var cat = {
+  name:'有鱼',
+  eat:function(){
+    console.log(this.name);//有鱼
   }
 }
 cat.eat();
 ```
 
-2、多层作用域链时，this指的是距离方法最近的一层对象
+2、多层作用域链时，this 指的是距离方法最近的一层对象
 
 ```
 var name = '卡卡';
-var cat = {    
-  name:'有鱼',    
-  eat1:{        
-    name:'年年',        
-    eat2:function(){           
-      console.log(this.name);//年年        
-    }    
+var cat = {
+  name:'有鱼',
+  eat1:{
+    name:'年年',
+    eat2:function(){
+      console.log(this.name);//年年
+    }
    }
  }
  cat.eat1.eat2();
 ```
 
-这里需要注意一个情况，如果cat.eat1.eat2这个结果赋值给一个变量eat3，则eat3()的值是多少呢？
+这里需要注意一个情况，如果 cat.eat1.eat2 这个结果赋值给一个变量 eat3，则 eat3()的值是多少呢？
 
 ```
 var eat3 = cat.eat1.eat2;eat3(); // 卡卡
 ```
 
-答案是[卡卡]，这个是因为经过赋值操作时，并未发起函数调用，eat3()这个才是真正的调用，而发起这个调用的是根对象window，所以this指的就是window，this.name=卡卡
+答案是[卡卡]，这个是因为经过赋值操作时，并未发起函数调用，eat3()这个才是真正的调用，而发起这个调用的是根对象 window，所以 this 指的就是 window，this.name=卡卡
 
-**（三）构造函数的调用，this指的是实例化的新对象**
+**（三）构造函数的调用，this 指的是实例化的新对象**
 
 ```
 var name = '卡卡';
-function Cat(){    
-  this.name = '有鱼';    
+function Cat(){
+  this.name = '有鱼';
   this.type = '英短蓝猫';
 }
 var cat1 = new Cat();
-console.log(cat1);// 实例化新对象 
+console.log(cat1);// 实例化新对象
 Cat {name: "有鱼", type: "英短蓝猫"}
 console.log(cat1.name);// 有鱼
 ```
 
-**（四）apply和call调用时，this指向参数中的对象**
+**（四）apply 和 call 调用时，this 指向参数中的对象**
 
 ```
 var name = '有鱼';
-function eat(){    
+function eat(){
   console.log(this.name);
 }
-var cat = {    
+var cat = {
   name:'年年',
 }
-var dog = {    
+var dog = {
   name:'高飞',
 }
 eat.call(cat);// 年年
@@ -482,10 +494,10 @@ eat.call(dog);// 高飞
 
 ```
 var name = '卡卡';
-var cat = {    
-  name:'有鱼',    
-  eat:(function(){        
-    console.log(this.name);//卡卡    
+var cat = {
+  name:'有鱼',
+  eat:(function(){
+    console.log(this.name);//卡卡
     })()
 }
 cat.eat;
@@ -495,43 +507,43 @@ cat.eat;
 
 ```
 var name = '卡卡';
-var cat = setInterval(function(){    
-  var name = '有鱼';    
-  console.log(this.name);// 卡卡    
+var cat = setInterval(function(){
+  var name = '有鱼';
+  console.log(this.name);// 卡卡
   clearInterval(cat);
 },500);
 ```
 
 总结：
- ①普通函数的调用，this指向的是window
- ②对象方法的调用，this指的是该对象，且是最近的对象
- ③构造函数的调用，this指的是实例化的新对象
- ④apply和call调用，this指向参数中的对象
- ⑤匿名函数的调用，this指向的是全局对象window
- ⑥定时器中的调用，this指向的是全局变量window
+① 普通函数的调用，this 指向的是 window
+② 对象方法的调用，this 指的是该对象，且是最近的对象
+③ 构造函数的调用，this 指的是实例化的新对象
+④apply 和 call 调用，this 指向参数中的对象
+⑤ 匿名函数的调用，this 指向的是全局对象 window
+⑥ 定时器中的调用，this 指向的是全局变量 window
 
 #### 5.闭包的实现原理和作用，可以列举几个开发中闭包的实际应用
 
 包就是能够读取其他函数内部变量的函数 它的最大用处有两个，一个是前面提到的可以读取函数内部的变量，另一个就是让这些变量的值始终保持在内存中。
 
 ```
-function f1() {    
-  var n = 999;    
-  nAdd = function () { n += 1 }    
-  function f2() { alert(n); }    
+function f1() {
+  var n = 999;
+  nAdd = function () { n += 1 }
+  function f2() { alert(n); }
   return f2;
 }
 var result = f1();result(); // 999nAdd();result(); // 1000
 ```
 
-在这段代码中，result实际上就是闭包f2函数。它一共运行了两次，第一次的值是999，第二次的值是1000。这证明了，函数f1中的局部变量n一直保存在内存中，并没有在f1调用后被自动清除。 为什么会这样呢？
-原因就在于f1是f2的父函数，而f2被赋给了一个全局变量，这导致f2始终在内存中，而f2的存在依赖于f1，因此f1也始终在内存中，不会在调用结束后，被垃圾回收机制（garbage collection）回收。 这段代码中另一个值得注意的地方，就是"nAdd=function(){n+=1}"这一行，首先在nAdd前面没有使用var关键字，因此nAdd是一个全局变量，而不是局部变量。其次，nAdd的值是一个匿名函数（anonymous function），而这个匿名函数本身也是一个闭包，所以nAdd相当于是一个setter，可以在函数外部对函数内部的局部变量进行操作。
+在这段代码中，result 实际上就是闭包 f2 函数。它一共运行了两次，第一次的值是 999，第二次的值是 1000。这证明了，函数 f1 中的局部变量 n 一直保存在内存中，并没有在 f1 调用后被自动清除。 为什么会这样呢？
+原因就在于 f1 是 f2 的父函数，而 f2 被赋给了一个全局变量，这导致 f2 始终在内存中，而 f2 的存在依赖于 f1，因此 f1 也始终在内存中，不会在调用结束后，被垃圾回收机制（garbage collection）回收。 这段代码中另一个值得注意的地方，就是"nAdd=function(){n+=1}"这一行，首先在 nAdd 前面没有使用 var 关键字，因此 nAdd 是一个全局变量，而不是局部变量。其次，nAdd 的值是一个匿名函数（anonymous function），而这个匿名函数本身也是一个闭包，所以 nAdd 相当于是一个 setter，可以在函数外部对函数内部的局部变量进行操作。
 
 #### 6.理解堆栈溢出和内存泄漏的原理，如何防止
 
 **1、内存泄露**：是指申请的内存执行完后没有及时的清理或者销毁，占用空闲内存，内存泄露过多的话，就会导致后面的程序申请不到内存。因此内存泄露会导致内部内存溢出 **2、堆栈溢出**：是指内存空间已经被申请完，没有足够的内存提供了
 
-常见的手段是将一个变量置为null，该变量就会被下一轮垃圾回收机制回收。 常见的内存泄露的原因：
+常见的手段是将一个变量置为 null，该变量就会被下一轮垃圾回收机制回收。 常见的内存泄露的原因：
 
 - 全局变量引起的内存泄露
 - 闭包
@@ -543,85 +555,83 @@ var result = f1();result(); // 999nAdd();result(); // 1000
 - 严格使用闭包（因为闭包会导致内存泄露）
 - 避免死循环的发生
 
-#### 7.js的垃圾回收机制
+#### 7.js 的垃圾回收机制
 
- 原理，查找出不在使用的变量，然后释放其使用的内存
+原理，查找出不在使用的变量，然后释放其使用的内存
 
-​	采用2种方式记录变量
+​ 采用 2 种方式记录变量
 
 - 标记清除
 
-​	工作流程是在垃圾收集器运行时，给存储在内存中的变量打算标记
+​ 工作流程是在垃圾收集器运行时，给存储在内存中的变量打算标记
 
-​	去掉环境中的变量和被环境变量所引用的变量的标记
+​ 去掉环境中的变量和被环境变量所引用的变量的标记
 
-​	存在标记的变量视为准备删除的变量
+​ 存在标记的变量视为准备删除的变量
 
-​	销毁带标记的值并回收它们所占用的内存空间
+​ 销毁带标记的值并回收它们所占用的内存空间
 
 - 引用计数
   追踪记录每个变量值被使用的次数
 
-  - 当声明了一个变量且并一个引用类型赋值给该变量的时候这个值的引用次数就为1
-  - 如果同一个值又被赋给另一个变量，那么引用数加1
-  - 如果该变量的值被其他的值覆盖了，则引用次数减1
-  - 当这个值的引用次数变成0的时候，说明没有变量在使用，这个值没法被访问，回收空间，垃圾回收器会在运行的时候清理引用次数为0的值所占用的内存
-
-  
+  - 当声明了一个变量且并一个引用类型赋值给该变量的时候这个值的引用次数就为 1
+  - 如果同一个值又被赋给另一个变量，那么引用数加 1
+  - 如果该变量的值被其他的值覆盖了，则引用次数减 1
+  - 当这个值的引用次数变成 0 的时候，说明没有变量在使用，这个值没法被访问，回收空间，垃圾回收器会在运行的时候清理引用次数为 0 的值所占用的内存
 
 ### 执行机制
 
-#### 1.JavaScript如何实现异步编程，可以详细描述EventLoop机制
+#### 1.JavaScript 如何实现异步编程，可以详细描述 EventLoop 机制
 
 ![image.png](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/16/173566d89a98fbad~tplv-t2oaga2asx-watermark.awebp) 任务队列实际上有两个，一个是宏任务队列，一个是微任务队列，当主线程执行完毕，如果微任务队列中有微任务，则会先进入执行栈，当微任务队列没有任务时，才会执行宏任务的队列。
 
 #### 2.宏任务和微任务分别有哪些
 
-微任务包括： 原生Promise(有些实现的promise将then方法放到了宏任务中),Object.observe(已废弃), MutationObserver， MessageChannel；只有promise调用then的时候，then里面的函数才会被推入微任务中 宏任务包括：setTimeout, setInterval, setImmediate, I/O；
+微任务包括： 原生 Promise(有些实现的 promise 将 then 方法放到了宏任务中),Object.observe(已废弃), MutationObserver， MessageChannel；只有 promise 调用 then 的时候，then 里面的函数才会被推入微任务中 宏任务包括：setTimeout, setInterval, setImmediate, I/O；
 
-#### 3.使用Promise实现串行
+#### 3.使用 Promise 实现串行
 
 ```
-function execute(tasks){    
-  return tasks.reduce((previousPromise, currentPromise)=>previousPromise.then(resultList=>{        
-    return new Promise(resolve=>{ 
+function execute(tasks){
+  return tasks.reduce((previousPromise, currentPromise)=>previousPromise.then(resultList=>{
+    return new Promise(resolve=>{
       currentPromise().then(result=>{
         resolve(resultList.concat(result))
-        }).catch(()=>{                
-          resolve(resultList.concat(null))            
-        })        
-      })    
+        }).catch(()=>{
+          resolve(resultList.concat(null))
+        })
+      })
     },Promise.resolve([])))}
-const execute = (tasks = []) => {    
-  const resultList = [];    
-  for(task of tasks){        
-    try{            
-      resultList.push(await tasks())        
-    }catch(err){            
-      resultList.push(null);        
-    }    
-  }    
+const execute = (tasks = []) => {
+  const resultList = [];
+  for(task of tasks){
+    try{
+      resultList.push(await tasks())
+    }catch(err){
+      resultList.push(null);
+    }
+  }
   return resultList;
 }
 ```
 
-#### 4.Node与浏览器EventLoop的差异
+#### 4.Node 与浏览器 EventLoop 的差异
 
-**Node 10以前：** 执行完一个阶段的所有任务 执行完nextTick队列里面的内容 然后执行完微任务队列的内容 Node **11以后：** 和浏览器的行为统一了，都是每执行一个宏任务就执行完微任务队列。
+**Node 10 以前：** 执行完一个阶段的所有任务 执行完 nextTick 队列里面的内容 然后执行完微任务队列的内容 Node **11 以后：** 和浏览器的行为统一了，都是每执行一个宏任务就执行完微任务队列。
 
-### 语法和API
+### 语法和 API
 
-#### 1.理解ECMAScript和JavaScript的关系
+#### 1.理解 ECMAScript 和 JavaScript 的关系
 
-ECMAScript和JavaScript的关系是，前者是后者的规格，后者是前者的一种实现
+ECMAScript 和 JavaScript 的关系是，前者是后者的规格，后者是前者的一种实现
 
-#### 2.setInterval需要注意的点，使用settimeout实现setInterval
+#### 2.setInterval 需要注意的点，使用 settimeout 实现 setInterval
 
 ```
-function  mySetInterval(fn,mil){    
+function  mySetInterval(fn,mil){
   function interval(){
-    setTimeout(interval,mil);        
-    fn();    
+    setTimeout(interval,mil);
+    fn();
   }
  }
 setTimeout(interval,mil)}mySetInterval(function(){console.log(1)},1000)
@@ -630,40 +640,40 @@ setTimeout(interval,mil)}mySetInterval(function(){console.log(1)},1000)
 #### 3.什么是防抖和节流？有什么区别？如何实现？
 
 **防抖**
- 防抖就是n时间内函数只会执行一次，如果n时间内多次触发则会重新计算时间
+防抖就是 n 时间内函数只会执行一次，如果 n 时间内多次触发则会重新计算时间
 
 ```
- function debounce(fn){          
-  let timeout =null;          
-  return function(){ 
-    clearTimeout(timeout);              
-    timeout =setTimeout(function(){                  
-      fn.apply(this,arguments)              
+ function debounce(fn){
+  let timeout =null;
+  return function(){
+    clearTimeout(timeout);
+    timeout =setTimeout(function(){
+      fn.apply(this,arguments)
     },500)
   }
- }      
- function say(){ console.log('防抖') }      
- var myInput = document.getElementById('hello');      
+ }
+ function say(){ console.log('防抖') }
+ var myInput = document.getElementById('hello');
  myInput.addEventListener('input',debounce(say))
 ```
 
 **节流**
- n时间内只会执行一次
+n 时间内只会执行一次
 
 ```
- function throttle(fn){          
-  let canFlag = true;          
-  return function(){              
-    if(!canFlag) return;              
-    canFlag = false;              
-    setTimeout(()=>{  
+ function throttle(fn){
+  let canFlag = true;
+  return function(){
+    if(!canFlag) return;
+    canFlag = false;
+    setTimeout(()=>{
       fn.apply(this,arguments);
-      canFlag = true 
-    },1000)          
-   }      
-  }      
- function say(){ console.log('节流',new Date()) }      
- var myInput = document.getElementById('hello');      
+      canFlag = true
+    },1000)
+   }
+  }
+ function say(){ console.log('节流',new Date()) }
+ var myInput = document.getElementById('hello');
  myInput.addEventListener('input',throttle(say))
 ```
 
@@ -674,28 +684,28 @@ setTimeout(interval,mil)}mySetInterval(function(){console.log(1)},1000)
 - WeakSet 的成员只能是对象，而不能是其他类型的值
 - WeakSet 中的对象都是弱引用，即垃圾回收机制不考虑 WeakSet 对该对象的引用，也就是说，如果其他对象都不再引用该对象，那么垃圾回收机制会自动回收该对象所占用的内存，不考虑该对象还存在于 WeakSet 之中
 
-**WeakMap结构与Map结构类似，也是用于生成键值对的集合**
+**WeakMap 结构与 Map 结构类似，也是用于生成键值对的集合**
 
-- WeakMap只接受对象作为键名（null除外），不接受其他类型的值作为键名
-- WeakMap的键名所指向的对象，不计入垃圾回收机制
+- WeakMap 只接受对象作为键名（null 除外），不接受其他类型的值作为键名
+- WeakMap 的键名所指向的对象，不计入垃圾回收机制
 
 #### 5.事件冒泡、捕获(委托)
 
 - **事件冒泡**指在在一个对象上触发某类事件，如果此对象绑定了事件，就会触发事件，如果没有，就会向这个对象的父级对象传播，最终父级对象触发了事件。
 - **事件委托**本质上是利用了浏览器事件冒泡的机制。因为事件在冒泡过程中会上传到父节点，并且父节点可以通过事件对象获取到目标节点，因此可以把子节点的监听函数定义在父节点上，由父节点的监听函数统一处理多个子元素的事件，这种方式称为**事件代理**。
 
-`event.stopPropagation()` 或者 ie下的方法 `event.cancelBubble = true;` //阻止事件冒泡
+`event.stopPropagation()` 或者 ie 下的方法 `event.cancelBubble = true;` //阻止事件冒泡
 
 `event.preventDefault()`// 阻止元素的默认事件。
 
-### 6.箭头函数和普通函数的区别
+#### 6.箭头函数和普通函数的区别
 
-1. 箭头函数没有`prototype`(原型)，所以箭头函数本身没有this
-2. 箭头函数的this在定义的时候继承自外层第一个普通函数的this。
-3. 如果箭头函数外层没有普通函数，严格模式和非严格模式下它的this都会指向`window`(全局对象)
-4. 箭头函数本身的this指向不能改变，但可以修改它要继承的对象的this。
-5. 箭头函数的this指向全局，使用arguments会报未声明的错误。
-6. 箭头函数的this指向普通函数时,它的`argumens`继承于该普通函数
+1. 箭头函数没有`prototype`(原型)，所以箭头函数本身没有 this
+2. 箭头函数的 this 在定义的时候继承自外层第一个普通函数的 this。
+3. 如果箭头函数外层没有普通函数，严格模式和非严格模式下它的 this 都会指向`window`(全局对象)
+4. 箭头函数本身的 this 指向不能改变，但可以修改它要继承的对象的 this。
+5. 箭头函数的 this 指向全局，使用 arguments 会报未声明的错误。
+6. 箭头函数的 this 指向普通函数时,它的`argumens`继承于该普通函数
 7. 使用`new`调用箭头函数会报错，因为箭头函数没有`constructor`
 8. 箭头函数不支持`new.target`
 9. 箭头函数不支持重命名函数参数,普通函数的函数参数支持重命名
@@ -707,21 +717,39 @@ setTimeout(interval,mil)}mySetInterval(function(){console.log(1)},1000)
 2. 箭头函数在参数和箭头之间不能换行
 3. 箭头函数的解析顺序相对`||`靠前
 
-**不适用场景**：箭头函数的this意外指向和代码的可读性。
+**不适用场景**：箭头函数的 this 意外指向和代码的可读性。
 
+#### 7.Promise 是如何实现链式调用的
 
+//主要是考察如何承前启后的,通过 then 方法内部新生成的 promise 实现承前启后的功能,
 
+承前:将回调方法挂载到总的回调事件数组中
 
+启后:通过参数穿透的方式将当前返回的参数传递到下一个 promise 中
 
-# React框架相关问题
+方法的执行是通过 promise 内部状态机的状态变更实现方法触发的
 
-## 什么是jsx，babel是如何解析jsx的，新版本不用以入react包的原因是什么	
+//精简版
 
-jsx是一个模板语言，支持开发人员在js代码里面编写html元素。
+promise.then 方法返回的是状态回调函数的处理，我们可以把它当做一个包含参数的指针，指向的就是下一个 promise
 
-babel解析jsx，是先将jsx转换成React.element，再转化成React.fiber，再有fiber架构里element和真实dom的对照关系，将虚拟dom转换成真实dom。
+这么回答可能会被问到 promise 是如何实现参数穿透的
 
-新版本不用引入react.createElement，这种模式是来源于`Automatic Runtime`，要在webpack里面配置,`@babel/presets-react`设置`runtime`为`automatic`。
+//详情版
+
+Promise 中回调函数是通过数组的方式进行存储，当内部状态改变时会对应调用其回调数组中的方法，在.then 中返回的是一个新的 Promise 实例，且会将新的 promise 的回调方法挂载在总的回调数组里。如果.then 返回的是简单值，那么会变更新的 Promise 里的 resolve 方法，并触发回调数组的调用。如果.then 返回的是新的 Promise，则会等待它触发完成后，再去触发 then 方法里 Promise 的 resolve，所以可以在其结果里调用
+
+在 Promise 中，.then 方法有 2 个接收函数，一个是成功态函数，一个是失败态函数，其实返回的就是一个 Promise 实例。在新的实例中，根据.then 中的状态将新的 Promise 其内部的回调函数挂载在了总的执行事件数组中，然后当新的 Promise 状态改变时，重复此步骤，按顺序执行回调事件数组，从而实现一个链表的操作。
+
+# React 框架相关问题
+
+## 什么是 jsx，babel 是如何解析 jsx 的，新版本不用以入 react 包的原因是什么
+
+jsx 是一个模板语言，支持开发人员在 js 代码里面编写 html 元素。
+
+babel 解析 jsx，是先将 jsx 转换成 React.element，再转化成 React.fiber，再有 fiber 架构里 element 和真实 dom 的对照关系，将虚拟 dom 转换成真实 dom。
+
+新版本不用引入 react.createElement，这种模式是来源于`Automatic Runtime`，要在 webpack 里面配置,`@babel/presets-react`设置`runtime`为`automatic`。
 
 ```
 ”presets":[
@@ -731,133 +759,212 @@ babel解析jsx，是先将jsx转换成React.element，再转化成React.fiber，
 ]
 ```
 
-## 解释下react hooks里，为什么hooks的语法需要写在最外层，它是通过什么去实现的
+## 解释下 react hooks 里，为什么 hooks 的语法需要写在最外层，它是通过什么去实现的
 
 在`react`里面`hook`挂在在`fiber.memoizedState`上，多个`hook`以链表的方式保存，当`react`更新时，都会调用该链表进行检索，执行完成后，会将链表重置，然后使用的是`双缓存技术`将新链表以旧链表为模版进行复制出来的，所以链表内部的属性不会改变，其状态也不会丢失。
 
-## class组件有哪些生命周期分别是干嘛用的
+## useRef 是怎么实现数据缓存的
 
-## useRef是怎么实现数据缓存的
-
-通过ref创建一个js对象，根据react的fiber架构，在元素初始化创建的时候，会创建出相应对象，并将其保存在内存中。如果元素没有被销毁其生成的对象就不会改变。下一次渲染的时候，会返回该对象的引用。因为返回的是同一个对象的引用，所以就实现了数据缓存这一操作。
+通过 ref 创建一个 js 对象，根据 react 的 fiber 架构，在元素初始化创建的时候，会创建出相应对象，并将其保存在内存中。如果元素没有被销毁其生成的对象就不会改变。下一次渲染的时候，会返回该对象的引用。因为返回的是同一个对象的引用，所以就实现了数据缓存这一操作。
 
 ## 函数组件和类组件本质的区别
 
 类组件是初始化时，底层渲染只渲染一次，实例中保存着`state状态`，每次更新`state状态`的时候。只要调用对应的`render`函数以及对应的生命周期即可。而函数组件，每一次更新的调用，就意味着要新的函数执行，一个函数的更新操作，会重新定义内部的变量声明。
 
-## React中有哪些组件通信方式
+## React 中有哪些组件通信方式
 
-react中有5种组件通信的方式分别是
+react 中有 5 种组件通信的方式分别是
 
-1. props和callback
-   通过父组件传递给子组件props，或者子组件调用父组件的回调函数进行数据通信
+1. props 和 callback
+   通过父组件传递给子组件 props，或者子组件调用父组件的回调函数进行数据通信
 
 2. refs
-   通过获取组件或者dom节点的实例，可以将子组件的dom节点实例传递给父节点，也可以再父组件中直接调用子组件实例里的方法
+   通过获取组件或者 dom 节点的实例，可以将子组件的 dom 节点实例传递给父节点，也可以再父组件中直接调用子组件实例里的方法
 
 3. context
-   是一个可以用再组件树内共享数据的一个方法，通过上层定义一个公共的context，层级范围内的context都可以共享数据
+   是一个可以用再组件树内共享数据的一个方法，通过上层定义一个公共的 context，层级范围内的 context 都可以共享数据
 
-4. redux或者mobx等状态库
-   通过redux等三方库，统一管理数据流转
+4. redux 或者 mobx 等状态库
+   通过 redux 等三方库，统一管理数据流转
 
-5. event bus事件总线
+5. event bus 事件总线
 
-   一个全局事件中心，任何组件都可以向它发送事件或者向它订阅事件。但是不推荐这么使用，因为违反了react处理数据流的规则，而且使用需要手动绑定和解绑操作，而组件内部的状态可能还是未知的存在一定的风险
+   一个全局事件中心，任何组件都可以向它发送事件或者向它订阅事件。但是不推荐这么使用，因为违反了 react 处理数据流的规则，而且使用需要手动绑定和解绑操作，而组件内部的状态可能还是未知的存在一定的风险
 
-## 你认为setState是同步的还是异步的
+## 你认为 setState 是同步的还是异步的
 
 `batchUpdate`批量更新概念，当批量更新被打破后，它就是同步操作，没打破就是异步操作。如何打破，可以用`setTimeOut`打破，那再 异步环境中如何继续开启批量更新模式，可以用`React-Dom`中的`unstable_batchedUpdates`
 
-## react调度
+## react 调度
 
-## react调和
+​ `schedule`管理着 2 个队列一个是`taskqueue`队列，这一队列主要作用是记录过期的任务，还有一个队列是`timerqueue`队列，这一队列主要作用是执行在时间有效范围内的高优先级任务。当`timerqueue`队列中的任务过期了，就会被放进 taskqueue 队列中。
 
-## react diff过程以及哪三种策略
+​ 执行过程是，调度者根据时间片去判断任务执行中的任务是否被终止，如果超出时间片则中止该任务，并结束当前执行者，并通知下一个执行者，如此往复循环。直到任务执行完成。
 
-## react两颗render树之间怎么通信
+​ 任务是否完成则需要`react`去告知它，通过`schedule`和`react`的配合可以让`react`的任务具有异步中断的特性
 
-## react并发渲染
+- 任务优先级排序：
 
-## 为什么hook不能用在条件语句中 如果非要写在条件语句中需要怎么搞
+​ `taskqueue`:根据过期时间长短进行优先级排序，过期时间越早，越紧急，优先级越高，过期时间越早。
 
-## react高优先级怎么打断低优先级
+​ `timerqueue`:根据任务开始时间进行优先级排序，任务开始时间越早
+
+- 时间片下执行的任务需要有的特性：能被中断，也能被恢复
+- 什么样的任务会被中止： 任务未过期，但是没有剩余的执行时间
+
+## react 时间片的范围是多少毫秒
+
+16ms，而 settimeout 默认的延时是 4ms
+
+## react 任务的优先级
+
+事件优先级：按照用户事件的交互紧急程度，划分的优先级
+
+- 离散事件（DiscreteEvent）这些时间的触发是不连续的，优先级为 0（click，focusin，keydown 等）
+- 用户阻塞事件（UserBlockingEvent）特点是连续触发，阻塞渲染，优先级为 1（drag，scroll，mouseover 等）
+- 连续事件（ContinuousEvent）优先级最高，优先级为 2（error，audio 标签的 canplay，canplay 等）
+
+因为 react17 版本修改了事件处理机制，把事件处理从 dom 上转移到了 root 根节点上，所以每个事件在注册时就已经生成了各自的优先级，通过调用`createEventListenerWapperWithPriority`方法处理事件优先级的创建，最终绑定到 root 的事件监听其实是`dispatchDiscreteEvent`,`dispatchEvent`,`dispatchUserBlockingUpdate`三个中的一个。它们做的事情都是以各自事件的优先级去执行真正的事件处理函数，以某种优先级去执行事件处理函数是要借助 schedule 中提供的`runWithPriority`函数实现，通过这一函数，可以先将事件优先级先记录在 schedule 中，等 React 创建更新对象计算更新优先级的时候可以直接从这里获取。
+
+更新优先级：事件导致的 React 产生的更新对象（update）的优先级（update.lane）
+
+根据事件产生更新对象，在通过 lane 模型判断更新对象的优先级
+
+任务优先级：产生更新对象后，React 去执行一个更新任务，这个任务所持有的优先级
+
+调度优先级：schedule 根据 React 的更新任务去生成的一个调度任务，这个调度任务所持有的优先级
+
+## lane 模型
+
+concurrent-mode 模式下
+
+用于控制 react 中的优先级事件。
+
+模型中存在批更新处理，以及低优先级包裹处理，和优先级排序等
+
+`batchedUpdates`
+
+`批更新处理`如果出现多次更新，将会合并到一次更新操作中执行比如在 onClick 中处理`setState`
+
+`Suspense`
+
+`Suspense`内的组件子树比组件树的其他部分拥有更低的优先级
+
+## react 调和
+
+## react diff 过程以及哪三种策略
+
+## react 两颗 fiber 树之间怎么通信
+
+## react 并发渲染
+
+## 为什么 hook 不能用在条件语句中 如果非要写在条件语句中需要怎么搞
+
+## 说一说 react 的可中断渲染
+
+就是阐述下 react 是如何执行中断的，调度器是怎么工作的，如何调度任务，如何调和任务以及执行任务的
+
+## 说一说 react 的异步渲染特性
+
+应该是 suspense
+
+问题一个性质的问题，阐述下调度器是如何工作的，以及 react 在渲染阶段时候做了哪些工作，可以顺便牵扯一下双缓冲树
+
+## react 高优先级怎么打断低优先级
+
+它是通过在更新过程中，标记更新对象的优先级，将新旧任务的优先级进行比较，如果新任务的优先级小于旧任务则不处理，如果大于旧任务，就取消旧任务，将新任务放入执行任务的链表中并执行新任务。旧任务会被回收记录，等待下一次的渲染执行。
+
+1. unstable_scheduleCallback：可用于安排异步回调函数并设置回调的优先级。
+2. unstable_enqueueState：可用于在调度队列中安排状态更新，并将其与优先级一起调度。
+3. unstable_runWithPriority：可用于在指定的优先级下运行给定的函数，而不会调用 React 的调度器。
+4. unstable_wrapCallback：可用于包装回调函数并将其与指定的优先级一起调度，以便在调用回调函数时按照优先级排序。
+5. unstable_batchedUpdates：可用于批量更新组件状态。可以在包裹此函数的回调函数中更新组件状态，并且 React 会自动将所有更新打包并进行批量化处理，以提高性能。同时，也可以设置更新的优先级。
+
+## 双缓冲技术
+
+current fiber 树： 指的是当前屏幕上显示的内容所对应的 fiber 树
+
+workinprogress fiber 树：在内存中构建的 fiber 树
+
+在 mount 阶段时，是没有 current 树的，先产生 workinprogress 树，然后替换成 current 树。每次状态更新都会产生新的 workinprogress 树，当 workinprogress 树被 render 执行完成渲染后，current 的指针会指向这个 workinprogress 树，此时 workinprogress 树就变成了 current 树
 
 ## 说下生命周期以及捕获错误的生命周期是哪个
 
-## React render 和react createpotal 区别
+## React render 和 react createpotal 区别
 
-## 怎么用hook模拟生命周期
+## 怎么用 hook 模拟生命周期
 
-## react优化方式，类和函数组件都说一下
+## react 优化方式，类和函数组件都说一下
 
-# WebPack相关问题
+## diff 算法
 
-## loader和plugin有什么区别
+# WebPack 相关问题
 
-- loader是webpack中的文件解析系统，其作用是让webpack拥有加载和解析非JavaScript文件的能力
-- plugin是webpack中的插件系统，其作用是拓展webpack的功能，在webpack运行过程中
+## loader 和 plugin 有什么区别
 
-## plugin在webpack那个阶段的时候执行
+- loader 是 webpack 中的文件解析系统，其作用是让 webpack 拥有加载和解析非 JavaScript 文件的能力
+- plugin 是 webpack 中的插件系统，其作用是拓展 webpack 的功能，在 webpack 运行过程中
 
-哪个阶段都可以执行，具体看plugin的类型和配置。
+## plugin 在 webpack 那个阶段的时候执行
 
-初始化阶段： webpack会创建compiler对象，并执行所有插件实例的apply方法
+哪个阶段都可以执行，具体看 plugin 的类型和配置。
 
-编译阶段： webpack会创建compilation对象，并执行所有插件实例的apply方法
+初始化阶段： webpack 会创建 compiler 对象，并执行所有插件实例的 apply 方法
 
-输出阶段： 根据chunk和模块生产的最终内容，webpack会执行所有与输出有关的插件实例的apply方法
+编译阶段： webpack 会创建 compilation 对象，并执行所有插件实例的 apply 方法
 
-## loader是在webpack那个阶段的时候加载
+输出阶段： 根据 chunk 和模块生产的最终内容，webpack 会执行所有与输出有关的插件实例的 apply 方法
 
-loader是在webpack编译阶段执行的，加载loader将文件转化成标准的js内容，在通过JS解释器将JS编程AST对象。
+## loader 是在 webpack 那个阶段的时候加载
 
-## webpack运行的时候分为哪几个阶段，分别是干嘛的
+loader 是在 webpack 编译阶段执行的，加载 loader 将文件转化成标准的 js 内容，在通过 JS 解释器将 JS 编程 AST 对象。
+
+## webpack 运行的时候分为哪几个阶段，分别是干嘛的
 
 1.读取阶段
 
-​	在读取webpack.config.js（基础配置，基础环境，基础信息等）读取webpack基础配置生产compiler对象。然后加载初始化插件等，之后执行complier的run方法，确定entry文件定义的入口位置调用compiler.addEntry方法将入口文件转换为dependence对象
+​ 在读取 webpack.config.js（基础配置，基础环境，基础信息等）读取 webpack 基础配置生产 compiler 对象。然后加载初始化插件等，之后执行 complier 的 run 方法，确定 entry 文件定义的入口位置调用 compiler.addEntry 方法将入口文件转换为 dependence 对象
 
 2.编译阶段
 
-​	根据entry生成的dependence对象创建module对象，调用loader将模块转变成标准JS内容，然后通过JS解释器将JS转换成AST对象，从中找出该依赖模块的模块，在递归此操作直到所有入口文件都执行了映射处理后，生成对应的模块被翻译过后的内容和它们之间的依赖关系图
+​ 根据 entry 生成的 dependence 对象创建 module 对象，调用 loader 将模块转变成标准 JS 内容，然后通过 JS 解释器将 JS 转换成 AST 对象，从中找出该依赖模块的模块，在递归此操作直到所有入口文件都执行了映射处理后，生成对应的模块被翻译过后的内容和它们之间的依赖关系图
 
 3.输出阶段
 
-​	根据入口和模块直接的依赖关系，组装成一个或者多个包含模块的chunk，再把每个chunk转换成一个单独文件加入到输出列表，在这一步骤中，是最后一步可以修改输出结果的机会
+​ 根据入口和模块直接的依赖关系，组装成一个或者多个包含模块的 chunk，再把每个 chunk 转换成一个单独文件加入到输出列表，在这一步骤中，是最后一步可以修改输出结果的机会
 
-​	将处理好的文件，根据配置的输出路径和文件名，将文件写入到文件系统中
+​ 将处理好的文件，根据配置的输出路径和文件名，将文件写入到文件系统中
 
 ## Webpack 编译过程会将源码解析为 AST 吗？webpack 与 babel 分别实现了什么？
 
-会将源码解析成AST，webpack实现的是AST语法树的遍历集合，babel实现的是源文件和AST的关系映射和等价转换
+会将源码解析成 AST，webpack 实现的是 AST 语法树的遍历集合，babel 实现的是源文件和 AST 的关系映射和等价转换
 
 ## Webpack 编译过程中，如何识别资源对其他资源的依赖？
 
-Webpack遍历AST的过程中，会识别入口文件，以及使用import、require的导入语句，确定模块对其他资源的依赖关系
+Webpack 遍历 AST 的过程中，会识别入口文件，以及使用 import、require 的导入语句，确定模块对其他资源的依赖关系
 
-## Webpack中是如何将模块转化成Chunk，它的规则是什么样
+## Webpack 中是如何将模块转化成 Chunk，它的规则是什么样
 
 规则是：
 
-1. entry以及entry触达到的模块，组合成一个chunk
-2. 使用动态引入语句引入的模块，各自组合成一个chunk
+1. entry 以及 entry 触达到的模块，组合成一个 chunk
+2. 使用动态引入语句引入的模块，各自组合成一个 chunk
 
+## treeshacking 发生在 webpack 哪个阶段
 
+发生在 webpack 的导出阶段在导出阶段的时候读取 treeshacking 插件，然后优化掉不必要代码在打包到指定路径
 
-## treeshacking发生在webpack哪个阶段
+# Typescript 相关问题
 
-# Typescript相关问题
+## TypeScript 是什么？它有什么好处？
 
-## TypeScript是什么？它有什么好处？
+TypeScript 是一个强类型语言，比 JavaScript 更加的规范，工程化。好处是方便维护以及提高开发效率
 
-TypeScript是一个强类型语言，比JavaScript更加的规范，工程化。好处是方便维护以及提高开发效率
-
-## TypeScript中的类型注释是什么？它们是如何帮助开发者的？
+## TypeScript 中的类型注释是什么？它们是如何帮助开发者的？
 
 类型注释是解释对应数据它们属于哪个数据结构，使用冒号（:）来指定变量的类型，使用箭头（=>）来指定函数的返回值类型。帮助开发者更好定义接口或者业务场景所需要的参数类型
 
-## 什么是TypeScript中的类型？请列举一些常见的类型。
+## 什么是 TypeScript 中的类型？请列举一些常见的类型。
 
 any： 任意类型，可以定义任意类型，不进行类型校验
 null||undefined：空值类型
@@ -896,7 +1003,7 @@ type MyType = string | number;
 let myVar: MyType = "hello";
 ```
 
-Type Assertion： 类型断言，告诉typescript，这一个数据是一个准确的类型
+Type Assertion： 类型断言，告诉 typescript，这一个数据是一个准确的类型
 
 ```
 let myVar: any = "hello";
@@ -913,37 +1020,35 @@ function identity<T>(arg: T): T {
 let output = identity<string>("hello");
 ```
 
-
-
-## 什么是TypeScript的接口？它们有什么作用？
+## 什么是 TypeScript 的接口？它们有什么作用？
 
 接口是用于描述对象属性的一种机制，可以用于定义函数，类，对象等。作用是帮助开发者更好的理解函数输入输出的数据类型，可以提高维护性。
 
-## TypeScript中的泛型是什么？请列举一些使用泛型的场景。
+## TypeScript 中的泛型是什么？请列举一些使用泛型的场景。
 
 用于定义在接口，类，函数，指定一个类型参数，使它们可以适用于多种类型。
-可以用于定义函数库，react组件
+可以用于定义函数库，react 组件
 
-## 什么是TypeScript中的命名空间？它们有什么作用？
+## 什么是 TypeScript 中的命名空间？它们有什么作用？
 
 命名空间是为了隔绝内部定义的数据类型，避免全局污染和命名冲突，有点类似作用域的意思
 
-## TypeScript中的类型别名是什么？它们是如何帮助开发者的？
+## TypeScript 中的类型别名是什么？它们是如何帮助开发者的？
 
 类型别名是将数据类型命名成另一个名字重复使用，可以减少开发者重复声明，降低机械性劳动
 
-## 什么是TypeScript中的装饰器？它们是如何工作的？
+## 什么是 TypeScript 中的装饰器？它们是如何工作的？
 
-一个特殊的方法，可以接受参数，用于描述被装饰的成员或函数参数的特性和行为。调用后可以修改类，函数，方法一般是对他们的拓展，或者元编程，通过元数据@xxxx来实现的。
+一个特殊的方法，可以接受参数，用于描述被装饰的成员或函数参数的特性和行为。调用后可以修改类，函数，方法一般是对他们的拓展，或者元编程，通过元数据@xxxx 来实现的。
 装饰器的调用会转化成对装饰器函数的调用，将被装饰的成员或者函数通过参数的方式传递给装饰器函数，然后在装饰器函数中进行元编程（读取或者处理元数据）然后返回一个新的元素，用于替换原始元素。
 一句话来说就是对装饰器函数的调用，将旧元素当做参数传入给装饰器函数，装饰器函数再返回新元素替代旧元素，从而实现类的拓展或者改写等。
 
-## TypeScript中的枚举是什么？它们有什么作用？
+## TypeScript 中的枚举是什么？它们有什么作用？
 
 用来定义常量。
 
-## TypeScript中的模块是什么？它们是如何组织代码的？
+## TypeScript 中的模块是什么？它们是如何组织代码的？
 
-用于组织代码的一种方式，它可以将定于的数据类型独立于自己的作用域内，避免全局污染和命名冲突。寻找es15的方式，使用export和import的方式组织代码
+用于组织代码的一种方式，它可以将定于的数据类型独立于自己的作用域内，避免全局污染和命名冲突。寻找 es15 的方式，使用 export 和 import 的方式组织代码
 
-​	
+​
