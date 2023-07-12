@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+    body {
+      margin: 0;
+    }
+    .book {
+      position: absolute;
+      width: 320px;
+      height: 480px;
+      border: 1px solid red;
+      transform-origin: 0% 0%;
+      z-index: 1;
+    }
+    #content{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      transform-origin: 0% 0%;
+      /* transform: translateX(320px) translateY(480px); */
+    }
+    #page-current{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      transform-origin: 0% 0%;
+    }
+    #page-next{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      transform-origin: 0% 0%;
+    }
+    #pointA{
+      width: 5px;
+      height: 5px;
+      border-radius: 100%;
+      position: absolute;
+      background-color: black;
+      transform-origin: 0% 0%;
+    }
+    #pointG{
+      width: 5px;
+      height: 5px;
+      border-radius: 100%;
+      position: absolute;
+      background-color: black;
+      transform-origin: 0% 0%;
+    }
+    #pointE{
+      width: 5px;
+      height: 5px;
+      border-radius: 100%;
+      position: absolute;
+      background-color: black;
+    }
+    #pointN{
+      width: 5px;
+      height: 5px;
+      border-radius: 100%;
+      position: absolute;
+      background-color: black;
+      transform-origin: 0% 0%;
+    }
+    #pointB{
+      width: 5px;
+      height: 5px;
+      border-radius: 100%;
+      position: absolute;
+      background-color: black;
+      transform-origin: 0% 0%;
+    }
+    #pointK{
+      width: 5px;
+      height: 5px;
+      border-radius: 100%;
+      position: absolute;
+      background-color: black;
+      transform-origin: 0% 0%;
+    }
+    #pointU{
+      width: 5px;
+      height: 5px;
+      border-radius: 100%;
+      position: absolute;
+      background-color: black;
+      transform-origin: 0% 0%;
+    }
+    #pointO{
+      width: 5px;
+      height: 5px;
+      border-radius: 100%;
+      position: absolute;
+      background-color: black;
+      transform-origin: 0% 0%;
+    }
+    #pointP{
+      width: 5px;
+      height: 5px;
+      border-radius: 100%;
+      position: absolute;
+      background-color: black;
+      transform-origin: 0% 0%;
+    }
+    #pointH{
+      width: 5px;
+      height: 5px;
+      border-radius: 100%;
+      position: absolute;
+      transform-origin: 0% 0%;
+      background-color: black;
+    }
+    #lineAF{
+      background-color: black;
+      position: absolute;
+      left: 320px;
+      top: 480px;
+      transform: rotate(-90deg);
+      transform-origin: 0% 0%;
+    }
+    #lineEG{
+      background-color: black;
+      position: absolute;
+      left: 320px;
+      top: 480px;
+      transform: rotate(-90deg);
+      transform-origin: 0% 0%;
+    }
+    #lineGH{
+      background-color: black;
+      position: absolute;
+      left: 320px;
+      top: 480px;
+      transform: rotate(-90deg);
+      transform-origin: 0% 0%;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="book">
+      <div id="content">
+        <div id="page-current"></div>
+        <div id="page-next"></div>
+      </div>
+    </div>
+  </body>
+  <script>
+    //生成触控点
+    function createPoint(e,parent){
+      var PointA = document.getElementById('pointA')
+      var PointB = document.getElementById('pointB')
+      var PointK = document.getElementById('pointK')
+      var PointG = document.getElementById('pointG')
+      var PointE = document.getElementById('pointE')
+      var PointH = document.getElementById('pointH')
+      var PointN = document.getElementById('pointN')
+      var PointU = document.getElementById('pointU')
+      var PointO = document.getElementById('pointO')
+      var PointP = document.getElementById('pointP')
+
+      var LineAF = document.getElementById('lineAF')
+      var x = e.clientX
+      var y = e.clientY
+      //计算斜边
+      let lineX = 320-x
+      let lineY = 480-y
+      let lineGX= lineX/2
+      let lineGY = lineY/2
+      let lengthAF = Math.sqrt(lineX * lineX + lineY * lineY);
+      const radiansAF =  Math.atan(lineY/lineX)
+      const angleAF = radiansAF * (180 / Math.PI); // 角度 
+      let newAngleAF = 180 + angleAF
+      let lengthGF = lengthAF/2
+      const radianFEG = Math.atan(lineGX/lineGY)
+      const angleFEG = radiansAF * (180 / Math.PI); // 角度 
+
+      const lengthEM = lineGY * lineGY / lineGX
+      let lengthEF =  lengthEM + lineGX
+      if(lengthEF >= 320) {
+        lengthEF = 320
+      }
+
+      const lengthLH = lineGX * lineGX / lineGY
+      let lengthFH = lengthLH + lineGY 
+      if(lengthFH >= 480) {
+        lengthFH = 480
+      }
+      let lengthAE = Math.sqrt((480-y)*(480-y) + (lengthEF-x)*(lengthEF-x))
+      if(lengthAE < 320) {
+        if(!PointA){
+        let pointG = document.createElement('div')
+        let pointB = document.createElement('div')
+        let pointK = document.createElement('div')
+        let pointE = document.createElement('div')
+        let pointH = document.createElement('div')
+        let pointN = document.createElement('div')
+        let pointU = document.createElement('div')
+        let pointO = document.createElement('div')
+        let pointA = document.createElement('div')
+        let lineAF = document.createElement('div')
+        lineAF.setAttribute('id','lineAF')
+        pointG.setAttribute('id','pointG')
+        pointE.setAttribute('id','pointE')
+        pointB.setAttribute('id','pointB')
+        pointK.setAttribute('id','pointK')
+        pointA.setAttribute('id','pointA')
+        pointH.setAttribute('id','pointH')
+        pointN.setAttribute('id','pointN')
+        pointU.setAttribute('id','pointU')
+        pointO.setAttribute('id','pointO')
+        pointA.style.top = `${y}px`
+        pointA.style.left = `${x}px`
+        pointA.innerHTML = 'A'
+        //连接锚点和初始坐标的线
+        lineAF.style.width = `${lengthAF}px`
+        lineAF.style.height = `1px`
+        lineAF.style.transform = `rotate(${newAngleAF}deg)`
+
+        pointG.style.top = `${y/2}px`
+        pointG.style.left = `${x/2}px`
+        pointG.innerHTML = 'G'
+
+        pointE.style.top = `480px`
+        pointE.style.left = `${320-lengthEF}px`
+        pointE.innerHTML = 'E'
+
+        pointB.style.top = `${y/2}px`
+        pointB.style.left = `${x+((320-lengthEF-x)/2)}px`
+        pointB.innerHTML = 'B'
+
+        pointH.style.top =  `${480-lengthFH}px`
+        pointH.style.left = `320px`
+        pointH.innerHTML = 'H'
+        
+        pointK.style.top = `${480-lengthFH+(y-(480-lengthFH))/2}px`
+        pointK.style.left = `${x+(320-x)/2}px`
+        pointK.innerHTML = 'K'
+
+        pointN.style.top = `${y*(3/4)}px`
+        pointN.style.left = `${x*(3/4)}px`
+        pointN.innerHTML = 'N'
+
+        pointU.style.top = `${y*(5/8)}px`
+        pointU.style.left = `${x*(5/8)}px`
+        pointU.innerHTML = 'U'
+
+        pointO.style.top = `${y*(5/8)}px`
+        pointO.style.left = `${x+(320-x)/2-(x*(3/4))}px`
+        pointO.innerHTML = 'O'
+
+        parent.appendChild(pointA)
+        parent.appendChild(pointB)
+        parent.appendChild(pointK)
+        parent.appendChild(pointG)
+        parent.appendChild(pointE)
+        parent.appendChild(pointH)
+        parent.appendChild(pointN)
+        parent.appendChild(pointU)
+        parent.appendChild(pointO)
+        parent.appendChild(lineAF)
+      } 
+      else {
+        let NX = x+(lineGX/2)
+        let NY = y+(lineGY/2)
+        let EX = 320-lengthEF
+        let HY = 480-lengthFH
+        let KX = x+(320-x)/2
+        let KY = HY+(y-(HY))/2
+        let BX = x+((320-lengthEF-x)/2)
+        let BY = 480-(480-y)/2> 480? 480: 480-(480-y)/2
+        let UX = x+(lineGX/4)
+        let UY = y+(lineGY/4)
+        let OX = KX+(320-KX)/2
+        let OY = KY-(NY-KY)
+        LineAF.style.transform = `rotate(${newAngleAF}deg)`
+        LineAF.style.width = `${lengthAF}px`
+        LineAF.style.width = `${lengthAF}px`
+
+        PointA.style.top = `${y}px`
+        PointA.style.left = `${x}px`
+
+        PointG.style.top = `${y+lineGY}px`
+        PointG.style.left = `${x+lineGX}px`
+
+        PointE.style.left = `${EX}px`
+
+        PointH.style.top = `${HY}px`
+
+        PointN.style.top = `${NY}px`
+        PointN.style.left = `${NX}px`
+
+        PointU.style.top = `${UY}px`
+        PointU.style.left = `${UX}px`
+
+        PointB.style.top = `${BY}px`
+        PointB.style.left = `${BX}px`
+
+        PointK.style.top = `${KY}px`
+        PointK.style.left = `${KX}px`
+
+        PointO.style.top = `${OY}px`
+        PointO.style.left = `${OX}px`
+      }
+      }
+    }
+    window.onload = () => {
+      var pdfContent = document.getElementById('content')
+      window.addEventListener('mousemove', function (e) {
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+        const areaLeft = pdfContent.offsetLeft;
+        const areaTop = pdfContent.offsetTop;
+        const areaWidth = pdfContent.offsetWidth;
+        const areaHeight = pdfContent.offsetHeight;
+        if (mouseX >= areaLeft && mouseX <= areaLeft + areaWidth && mouseY >= areaTop && mouseY <= areaTop + areaHeight) {
+          // 这里可以执行你想要的操作
+          createPoint(e,pdfContent)
+          // pdfContent.appendChild(point)
+        }
+      })
+    }
+  </script>
+</html>
